@@ -18,7 +18,49 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+/* 공통 레이아웃 */
+.App {
+  font-family: sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
+/* 탭 버튼 스타일 */
+.tab-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.tab-buttons button {
+  flex: 1;
+  padding: 10px;
+  margin: 0 5px;
+  border: none;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.tab-buttons button:hover {
+  background-color: #e0e0e0;
+}
+
+.tab-buttons button.active {
+  background-color: #4caf50;
+  color: white;
+}
+
+/* 컴포넌트 구분 박스 */
+.component-box {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
 
 @keyframes logo-spin {
   from {
