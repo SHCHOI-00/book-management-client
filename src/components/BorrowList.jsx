@@ -26,10 +26,10 @@ function BorrowList() {
         },
       });
       alert('반납 성공!');
-      fetchBorrows(); // 반납 후 목록 새로고침
+      fetchBorrows();
     } catch (err) {
       console.error('반납 실패:', err);
-      alert('반납 실패: ' + err.response?.data?.error || '알 수 없는 오류');
+      alert('반납 실패: ' + (err.response?.data?.error || '알 수 없는 오류'));
     }
   };
 
@@ -37,23 +37,44 @@ function BorrowList() {
     fetchBorrows();
   }, []);
 
+  const currentBorrows = borrows.filter(b => b.returnDate === null);
+  const returnedBorrows = borrows.filter(b => b.returnDate !== null);
+
   return (
     <div>
-      <h2>📖 대출한 도서 목록</h2>
+      <h2>📦 현재 대출 중인 도서</h2>
       <ul>
-        {borrows.map((borrow) => (
-          <li key={borrow.id}>
-            <strong>{borrow.book.title}</strong> - {borrow.book.author}
-            <br />
-            대출일: {new Date(borrow.borrowDate).toLocaleDateString()}
-            <br />
-            {borrow.returnDate ? (
-              <span>✅ 반납 완료</span>
-            ) : (
+        {currentBorrows.length === 0 ? (
+          <li>현재 대출 중인 도서가 없습니다.</li>
+        ) : (
+          currentBorrows.map((borrow) => (
+            <li key={borrow.id}>
+              <strong>{borrow.book.title}</strong> - {borrow.book.author}
+              <br />
+              대출일: {new Date(borrow.borrowDate).toLocaleDateString()}
+              <br />
               <button onClick={() => handleReturn(borrow.id)}>반납하기</button>
-            )}
-          </li>
-        ))}
+            </li>
+          ))
+        )}
+      </ul>
+
+      <h2 style={{ marginTop: '30px' }}>📚 반납 완료한 도서</h2>
+      <ul>
+        {returnedBorrows.length === 0 ? (
+          <li>반납 완료한 도서가 없습니다.</li>
+        ) : (
+          returnedBorrows.map((borrow) => (
+            <li key={borrow.id}>
+              <strong>{borrow.book.title}</strong> - {borrow.book.author}
+              <br />
+              대출일: {new Date(borrow.borrowDate).toLocaleDateString()}<br />
+              반납일: {new Date(borrow.returnDate).toLocaleDateString()}
+              <br />
+              ✅ 반납 완료
+            </li>
+          ))
+        )}
       </ul>
     </div>
   );
