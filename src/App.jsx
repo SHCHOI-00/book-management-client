@@ -28,7 +28,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>📚 도서 관리 시스템</h1>
+      <h1>📚 도서 아나바다</h1>
 
       {isAuthenticated ? (
         <>

@@ -1,4 +1,3 @@
-// src/components/BookList.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
@@ -21,29 +20,47 @@ function BookList() {
   };
 
   const handleDelete = async (bookId) => {
-  if (!window.confirm('정말 삭제하시겠습니까?')) return;
+    if (!window.confirm('정말 삭제하시겠습니까?')) return;
 
-  try {
-    await axios.delete(`http://localhost:3000/books/${bookId}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    alert('삭제 성공!');
-    fetchBooks(); // 새로고침
-  } catch (err) {
-    console.error('삭제 실패:', err);
+    try {
+      await axios.delete(`http://localhost:3000/books/${bookId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      alert('삭제 성공!');
+      fetchBooks();
+    } catch (err) {
+      console.error('삭제 실패:', err);
+      const errorMsg =
+        err.response?.data?.error || '삭제 실패: 알 수 없는 오류가 발생했습니다.';
+      alert(errorMsg);
+    }
+  };
 
-    const errorMsg =
-      err.response?.data?.error || '삭제 실패: 알 수 없는 오류가 발생했습니다.';
-    alert(errorMsg);
-  }
+  const handleBorrow = async (bookId) => {
+    try {
+      await axios.post(
+        'http://localhost:3000/borrows',
+        { bookId },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
+      alert('대출 성공!');
+      fetchBooks(); // 대출 후 목록 새로고침
+    } catch (err) {
+      console.error('대출 실패:', err);
+      const msg = err.response?.data?.error || '알 수 없는 오류로 대출 실패';
+      alert('대출 실패: ' + msg);
+    }
   };
 
   useEffect(() => {
     fetchBooks();
 
-    // 토큰 디코딩해서 관리자 여부 확인
     const token = localStorage.getItem('token');
     if (token) {
       const decoded = jwtDecode(token);
@@ -53,7 +70,7 @@ function BookList() {
 
   return (
     <div>
-      <h2>📖 도서 목록</h2>
+      <h2>📖 공유된 도서 목록</h2>
       <ul>
         {books.map((book) => (
           <li key={book.id}>
@@ -61,7 +78,13 @@ function BookList() {
             <br />
             ISBN: {book.isbn}
             <br />
-            {book.available ? '✅ 대출 가능' : '❌ 대출 중'}
+            {book.available ? (
+              <button onClick={() => handleBorrow(book.id)} style={{ marginTop: '5px' }}>
+                📦 대출하기
+              </button>
+            ) : (
+              <span>❌ 대출 중</span>
+            )}
             <br />
             {isAdmin && (
               <button onClick={() => handleDelete(book.id)} style={{ marginTop: '5px' }}>
