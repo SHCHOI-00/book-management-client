@@ -1,6 +1,7 @@
 // src/App.jsx
 import React, { useState, useEffect } from 'react';
 import BookList from './components/BookList';
+import BorrowList from './components/BorrowList'; // ✅ 추가
 import LoginForm from './components/LoginForm';
 import AddBookForm from './components/AddBookForm';
 
@@ -30,6 +31,8 @@ function App() {
           <button onClick={handleLogout}>로그아웃</button>
           <AddBookForm onBookAdded={() => window.location.reload()} />
           <BookList />
+          <hr />
+          <BorrowList /> {/* ✅ 대출 도서 목록 및 반납 UI 추가 */}
         </>
       ) : (
         <LoginForm onLogin={handleLogin} />
