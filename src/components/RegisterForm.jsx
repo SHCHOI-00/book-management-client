@@ -1,22 +1,23 @@
+// src/components/RegisterForm.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
 
 function RegisterForm({ onRegister }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post('http://localhost:3000/auth/register', {
+      await axios.post('http://localhost:3000/auth/register', {
         username,
         password,
+        role: isAdmin ? 'admin' : 'user',
       });
-
-      const token = res.data.token;
-      localStorage.setItem('token', token);
-      onRegister(); // 회원가입 후 로그인 처리
+      alert('회원가입 성공!');
+      onRegister();
     } catch (err) {
       console.error('회원가입 실패:', err);
       alert('회원가입 실패');
@@ -40,6 +41,14 @@ function RegisterForm({ onRegister }) {
         onChange={(e) => setPassword(e.target.value)}
         required
       /><br />
+      <label>
+        <input
+          type="checkbox"
+          checked={isAdmin}
+          onChange={() => setIsAdmin(!isAdmin)}
+        /> 관리자 권한으로 가입
+      </label>
+      <br />
       <button type="submit">회원가입</button>
     </form>
   );
