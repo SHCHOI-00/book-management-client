@@ -16,7 +16,7 @@ npm install
 npm start
 ```
 
-✅ 디렉토리 구조
+## ✅ 디렉토리 구조
 ```css
 src/
 ├── components/
@@ -29,7 +29,7 @@ src/
 └── App.css
 ```
 
-✅ 기술 스택
+## ✅ 기술 스택
 React
 
 Axios (API 요청)
