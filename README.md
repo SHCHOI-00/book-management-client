@@ -30,8 +30,7 @@ src/
 ```
 
 ## ✅ 기술 스택
-React
 
-Axios (API 요청)
-
-JWT 디코딩을 위한 jwt-decode
+- React
+- Axios (API 요청)
+- JWT 디코딩을 위한 jwt-decode
