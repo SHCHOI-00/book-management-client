@@ -1,12 +1,37 @@
-# React + Vite
+# 📘 도서 아나바다 - 프론트엔드
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React 기반의 SPA 프론트엔드 프로젝트입니다.
 
-Currently, two official plugins are available:
+## ✅ 주요 특징
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 로그인 및 회원가입 기능
+- 탭을 이용한 UI 구성 (도서 목록, 도서 등록, 대출 목록)
+- 관리자만 '도서 삭제' 가능
+- 모든 유저가 '도서 등록' 가능
 
-## Expanding the ESLint configuration
+## ✅ 실행 방법
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install
+npm start
+```
+
+✅ 디렉토리 구조
+```css
+src/
+├── components/
+│   ├── LoginForm.jsx
+│   ├── RegisterForm.jsx
+│   ├── BookList.jsx
+│   ├── AddBookForm.jsx
+│   └── BorrowList.jsx
+├── App.jsx
+└── App.css
+```
+
+✅ 기술 스택
+React
+
+Axios (API 요청)
+
+JWT 디코딩을 위한 jwt-decode
